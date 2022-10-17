@@ -2,7 +2,7 @@ public/shared/out/
 node_modules/
 
 *.d.ts
-*.js
+public/**/*.js
 
 public/dist/
 server/content/
