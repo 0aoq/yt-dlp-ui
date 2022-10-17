@@ -1,0 +1,266 @@
+@import url("./units.less");
+
+// theme generation
+
+// config
+
+@themegen-lightness-mod: -15%;
+@themegen-hue: 208;
+@themegen-sat: 8%;
+
+@text-primary: hsl(0, 0%, 100%);
+@text-primary-low: hsl(0, 0%, 80%);
+
+@primary: hsl(34, 14%, 65% + @themegen-lightness-mod);
+@primary-low: hsl(34, 14%, 55% + @themegen-lightness-mod);
+
+// background scale
+
+@bg-surface-highest: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    32% + @themegen-lightness-mod
+);
+@bg-surface-higher: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    30% + @themegen-lightness-mod
+);
+@bg-surface-high: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    28% + @themegen-lightness-mod
+);
+@bg-surface: hsl(@themegen-hue, @themegen-sat, 26% + @themegen-lightness-mod);
+@bg-surface-low: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    24% + @themegen-lightness-mod
+);
+@bg-surface-lower: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    22% + @themegen-lightness-mod
+);
+@bg-surface-lowest: hsl(
+    @themegen-hue,
+    @themegen-sat,
+    20% + @themegen-lightness-mod
+);
+
+// defaults
+
+* {
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+    flex-wrap: wrap;
+    white-space: initial;
+    overflow-wrap: break-word;
+}
+
+body {
+    background: @bg-surface;
+    color: white;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    background: @bg-surface;
+    max-width: 80ch;
+    padding: 3em 1em;
+    line-height: 1.5;
+    margin: auto;
+
+    &.no-padding {
+        padding: 0;
+    }
+}
+
+// typography
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    // make headings primary
+    color: @primary;
+}
+
+p,
+span {
+    // make normal text text-primary
+    color: @text-primary;
+}
+
+a {
+    text-decoration: none;
+    color: @primary;
+
+    &:hover {
+        text-decoration: underline;
+        color: @bg-surface;
+        background: @primary;
+    }
+}
+
+// button
+
+button {
+    background: @primary;
+    transition: all 0.1s;
+    color: @bg-surface;
+    border-radius: 1rem;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    padding: 0.4rem 0.8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    // margin: 0.4rem auto;
+    outline: none;
+    border: none;
+
+    &:hover {
+        background: @primary-low;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+// card
+
+section {
+    background: @bg-surface-low;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    padding: 0.8rem;
+    border: 1px solid @bg-surface-lower;
+    border-radius: 0.4rem;
+}
+
+// input
+
+input,
+textarea,
+select {
+    --ring-spread: 2px;
+
+    background: @bg-surface-high;
+    color: @text-primary-low;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+    outline: none;
+    border: none;
+    transition: all 0.1s;
+
+    &::placeholder {
+        color: @text-primary-low;
+    }
+
+    &:hover {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 var(--ring-spread) @primary; // ring effect
+        color: @text-primary;
+    }
+}
+
+select {
+    cursor: context-menu;
+}
+
+// nav
+
+nav {
+    // thanks: https://github.com/0aoq/nbin/blob/master/public/shared/css/style.scss
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr; /* |   |       | */
+    align-items: center;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid @primary;
+    user-select: none;
+
+    & a {
+        font-size: 16.848px; /* h3 */
+        padding: 0.2rem;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    & :nth-child(2) {
+        /* align items in second section to the right */
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: var(--u-4);
+    }
+}
+
+// header
+
+.header {
+    // <3 https://github.com/0aoq/nbin/blob/master/public/shared/css/style.scss#L233
+    padding: 0.8rem;
+    margin: 0.4rem 0;
+    background: @primary;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+
+    & * {
+        color: @bg-surface !important;
+    }
+}
+
+// video
+.core\.post {
+    // <3 https://github.com/0aoq/nbin/blob/master/public/shared/css/style.scss#L188
+    padding: 0.4rem;
+    border: solid 1px @bg-surface-higher;
+    display: grid;
+    place-items: center;
+
+    transition: all 0.15s;
+
+    &:hover {
+        border-color: @bg-surface-higher;
+        cursor: pointer;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    }
+
+    & .post\.title {
+        color: @primary;
+    }
+
+    /* select the specific title we want */
+    &:hover > :first-child .post\.title {
+        /* steal properties from a:hover */
+        text-decoration: underline;
+        color: @bg-surface;
+        background: @primary;
+    }
+
+    /* videos/images */
+    & .media {
+        display: grid;
+        place-items: center;
+    }
+
+    & img {
+        max-width: 100%;
+        max-height: 25vh;
+    }
+
+    & video {
+        max-width: 100%;
+        max-height: 50vh;
+    }
+}

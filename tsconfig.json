@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "module": "ES2022",
+        "target": "ES2022",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "outDir": "public/shared/out/lib/",
+    }
+}

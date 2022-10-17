@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+    <title>📼 yt-dlp-ui</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="shared/out/css/style.css">
+
+    <!-- js -->
+    <script src="shared/out/lib/index.js" type="module"></script>
+</head>
+
+<body>
+    <main>
+        <nav>
+            <div>
+                <h3><a href="?#/%">📼 yt-dlp-ui</a></h3>
+            </div>
+
+            <div>
+                <a href="#/playlists/%">My Playlists</a>
+                <a href="#/download/%">Download</a>
+            </div>
+        </nav>
+
+        <!-- home page -->
+        <div id="page/">
+            <div class="header">
+                <h2>Home</h2>
+            </div>
+
+            <div id="core.home"></div>
+        </div>
+
+        <!-- playlists page -->
+        <div id="page/playlists/" style="display: none;">
+            <div class="header">
+                <h2>My Playlists</h2>
+            </div>
+
+            <div id="core.playlists"></div>
+        </div>
+
+        <!-- download -->
+        <div id="page/download/" style="display: none;">
+            <div class="header">
+                <h2>Download</h2>
+            </div>
+
+            <div class="flex justify-start align-center mt-4" style="flex-direction: column;">
+                <section style="width: var(--u-100);" class="mt-4">
+                    <form action="download" id="download" class="mt-2 flex" style="flex-direction: column;">
+                        <h4>Download from URL:</h4>
+                        <input type="url" name="url" placeholder="Enter URL..." required class="mt-4">
+
+                        <button class="mt-8">Download ➜</button>
+                    </form>
+                </section>
+
+                <p style="background-color: black; font: 12px monospace; color: white; padding: var(--u-2);"
+                    id="downloadSerial" class="mt-4">Waiting for input...<br></p>
+
+                <p class="mt-4" style="color: red;" id="downloadErrorReport"></p>
+            </div>
+        </div>
+
+        <!-- video -->
+        <div id="page/video/" style="display: none;"></div>
+    </main>
+</body>
+
+</html>
