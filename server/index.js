@@ -184,6 +184,34 @@ wss.on("connection", (ws) => {
                     break;
                 }
 
+            case "Delete:File":
+                // this endpoint excepts 1 parameter:
+                //     path: string
+                // we will use this to know what path the client is looking for (relative to contentLocation)
+
+                // make sure we have path
+                if (!data.path) return ws.close();
+
+                // make sure path doesn't include "/" (we shouldn't need it)
+                if (data.path.includes("/")) ws.close();
+
+                // verify file exists
+                if (!fs.existsSync(path.resolve(contentLocation, data.path))) {
+                    ws.send(
+                        JSON.stringify({
+                            action: "Post:Error:File",
+                            message: "File doesn't exist!",
+                        })
+                    );
+
+                    break;
+                } else {
+                    // delete file
+                    fs.unlinkSync(data.path);
+
+                    break;
+                }
+
             default:
                 ws.close();
                 break;
