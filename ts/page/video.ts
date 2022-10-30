@@ -7,6 +7,24 @@
 import { socket, token } from "../core/socket.js";
 
 /**
+ * @function b2ab
+ *
+ * @param {string} base64
+ * @returns {ArrayBuffer}
+ */
+function b2ab(base64: string) {
+    const str = window.atob(base64);
+    const len = str.length;
+    let bytes = new Uint8Array(len);
+
+    for (var i = 0; i < len; i++) {
+        bytes[i] = str.charCodeAt(i);
+    }
+
+    return bytes.buffer;
+}
+
+/**
  * @function showVideo
  *
  * @param {string} address
@@ -49,10 +67,34 @@ function showVideo(address: string) {
                     </div>
                     
                     <div class="core.post">
-                        <video src="data:video/webm;base64,${
-                            data.data
-                        }" controls></video>
+                        <video src="${URL.createObjectURL(
+                            new Blob([b2ab(data.data)], { type: "video/webm" })
+                        )}" controls></video>
+
+                        <button onclick="window.vdel()" class="mt-2">Delete Video</button>
                     </div>`;
+
+                // register window functions
+                (window as any).vdel = () => {
+                    // send delete request for video and thumbnail
+                    socket.send(
+                        JSON.stringify({
+                            action: "Delete:File",
+                            path: address,
+                            token,
+                        })
+                    );
+
+                    socket.send(
+                        JSON.stringify({
+                            action: "Delete:File",
+                            path: address.replace("webm", "webp"),
+                            token,
+                        })
+                    );
+
+                    window.location.href = "?#/%"; // send home
+                };
 
                 // remove event listener
                 socket.removeEventListener("message", listener);

@@ -207,7 +207,7 @@ wss.on("connection", (ws) => {
                     break;
                 } else {
                     // delete file
-                    fs.unlinkSync(data.path);
+                    fs.unlinkSync(path.resolve(contentLocation, data.path));
 
                     break;
                 }
