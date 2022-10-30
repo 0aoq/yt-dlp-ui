@@ -67,9 +67,9 @@ function showVideo(address: string) {
                     </div>
                     
                     <div class="core.post">
-                        <video src="${URL.createObjectURL(
+                        <video src="${/* URL.createObjectURL(
                             new Blob([b2ab(data.data)], { type: "video/webm" })
-                        )}" controls></video>
+                        ) */ data.data}" controls></video>
 
                         <button onclick="window.vdel()" class="mt-2">Delete Video</button>
                     </div>`;

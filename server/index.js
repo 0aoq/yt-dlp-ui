@@ -7,6 +7,9 @@
 // import
 import { exec } from "node:child_process"; // we need this to execute yt-dlp
 import crypto from "node:crypto"; // needed to generate tokens
+import http from "node:http"; // we need to serve media files
+
+import serve from "serve-handler"; // simple http server
 
 import { fileURLToPath } from "node:url"; // we'll use this to get __filename later
 import path from "node:path";
@@ -16,11 +19,18 @@ import { WebSocketServer } from "ws"; // we need this to run our server
 import config from "./server.config.js"; // import config
 
 // create server
+const httpServer = http.createServer((request, response) => {
+    return serve(request, response, {
+        public: contentLocation, // only serve content
+    });
+});
+
 const wss = new WebSocketServer({
-    port: config.port || 3047,
+    server: httpServer,
 });
 
 let tokens = []; // <- we'll store all active connection tokens in here
+httpServer.listen(config.port);
 
 // add content folder
 const contentLocation = path.resolve(
@@ -168,16 +178,16 @@ wss.on("connection", (ws) => {
 
                     break;
                 } else {
-                    // send back encoded file
+                    // send back file link
                     ws.send(
                         JSON.stringify({
                             action: "Post:File",
                             path: data.path,
-                            data: fs
-                                .readFileSync(
-                                    path.resolve(contentLocation, data.path)
-                                )
-                                .toString("base64"),
+                            /* data: fs.readFileSync(
+                                path.resolve(contentLocation, data.path),
+                                { encoding: "base64" }
+                            ), */
+                            data: `http://localhost:${config.port}/${encodeURI(data.path)}`,
                         })
                     );
 

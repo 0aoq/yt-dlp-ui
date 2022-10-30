@@ -80,7 +80,9 @@ function downloadFeed() {
                                 .getElementById(`post-${name}`)!
                                 .insertAdjacentHTML(
                                     "beforeend",
-                                    `<img src="data:image/webp;base64,${data.data}" class="mt-2">`
+                                    `<img src="${
+                                        /*data:image/webp;base64,${data.data}*/ data.data
+                                    }" class="mt-2">`
                                 );
                         }
                     });
